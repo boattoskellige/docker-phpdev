@@ -1,0 +1,19 @@
+version: '2'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - $SRC_PATH:/src
+      - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+  
+  php:
+    build: ./dockers/php72/
+    volumes:
+        - $SRC_PATH:/src
+
+  php56:
+    build: ./dockers/php56/
+    volumes:
+        - $SRC_PATH:/src
