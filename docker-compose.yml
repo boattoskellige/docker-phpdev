@@ -2,6 +2,7 @@ version: '2'
 services:
   web:
     image: nginx:latest
+    restart: always
     ports:
       - "8080:80"
     volumes:
@@ -10,10 +11,28 @@ services:
   
   php:
     build: ./dockers/php72/
+    restart: always
     volumes:
-        - $SRC_PATH:/src
+      - $SRC_PATH:/src
 
   php56:
     build: ./dockers/php56/
+    restart: always
     volumes:
-        - $SRC_PATH:/src
+      - $SRC_PATH:/src
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./volumes/db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  redis:
+    image: redis:alpine
+    restart: always
+    volumes:
+      - ./volumes/redis:/data
